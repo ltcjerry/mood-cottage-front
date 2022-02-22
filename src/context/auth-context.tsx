@@ -7,7 +7,7 @@ import { useAsync } from "hook/use-async";
 import { GlobalErrorFallback, GlobalLoading } from "component/style-component";
 
 interface AuthForm {
-  username: string;
+  userName: string;
   password: string;
 }
 // 刷新界面时需要自动重新获取当前用户信息，初始化过程

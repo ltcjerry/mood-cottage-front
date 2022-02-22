@@ -11,8 +11,8 @@ export const handleUserResponse = ({ user }: { user: User }) => {
   return user;
 };
 
-export const login = (data: { username: string; password: string }) => {
-  return fetch(`${apiUrl}/login`, {
+export const login = (data: { userName: string; password: string }) => {
+  return fetch(`${apiUrl}/api/user/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -27,8 +27,8 @@ export const login = (data: { username: string; password: string }) => {
   });
 };
 
-export const register = (data: { username: string; password: string }) => {
-  return fetch(`${apiUrl}/register`, {
+export const register = (data: { userName: string; password: string }) => {
+  return fetch(`${apiUrl}/api/user/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

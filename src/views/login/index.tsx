@@ -13,12 +13,22 @@ import LoginLogo from "assets/img/login_logo.png";
 import { ReactComponent as QQ } from "assets/svg/qq.svg";
 import { ReactComponent as Wechat } from "assets/svg/wechat.svg";
 import { ReactComponent as Github } from "assets/svg/github.svg";
+import { useState } from "react";
 
 export const Login = () => {
   // 获取全局context的信息和操作方法
-  const { login } = useAuth();
-  const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+  const { login, register } = useAuth();
+  // 登录与注册状态
+  const [isLogin, setIsLogin] = useState(true);
+  const handleSubmit = (values: { userName: string; password: string }) => {
+    if (isLogin) {
+      login(values);
+    } else {
+      register(values).then((res) => {
+        console.log("test", res);
+        setIsLogin(true);
+      });
+    }
   };
   return (
     <LoginContainer>
@@ -26,13 +36,13 @@ export const Login = () => {
       <FormBox>
         <Form onFinish={handleSubmit}>
           <Form.Item>
-            <TitleBox>帐密登录</TitleBox>
+            <TitleBox>{isLogin ? "帐密登录" : "帐密注册"}</TitleBox>
           </Form.Item>
           <Form.Item
-            name="username"
+            name="userName"
             rules={[{ required: true, message: "请输入用户名" }]}
           >
-            <Input id="username" placeholder="用户名" />
+            <Input id="userName" placeholder="请输入用户名" />
           </Form.Item>
 
           <Form.Item
@@ -43,10 +53,12 @@ export const Login = () => {
           </Form.Item>
           <Form.Item>
             <ButtonBox type="primary" htmlType="submit">
-              登录
+              {isLogin ? "登录" : "注册"}
             </ButtonBox>
             <LinkBox>
-              <Button type={"link"}>手机登录</Button>
+              <Button type={"link"} onClick={() => setIsLogin(false)}>
+                注册用户
+              </Button>
               <Button type={"link"}>忘记密码</Button>
             </LinkBox>
             <SvgList>
