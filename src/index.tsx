@@ -3,15 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "antd/dist/antd.less";
 import App from "./App";
+import { AppProvider } from "context";
 import reportWebVitals from "./reportWebVitals";
-// import { AppProviders } from "context";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* context组件 */}
-    {/* <AppProviders> */}
-    <App />
-    {/* </AppProviders> */}
+    <AppProvider>
+      <App />
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

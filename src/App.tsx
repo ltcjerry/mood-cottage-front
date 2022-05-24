@@ -1,13 +1,15 @@
 import { ErrorBoundary } from "component/error-boundary";
 import { GlobalErrorFallback } from "component/style-component";
-
-import { ProjectList } from "pages/project-list";
+import { useAuth } from "context/auth-context";
+import { AuthView } from "pages/auth";
+import { UnauthView } from "pages/unAuth";
 
 function App() {
+  const { user } = useAuth();
   return (
     <ErrorBoundary fallbackRender={GlobalErrorFallback}>
       <main className="App">
-        <ProjectList />
+        {user ? <AuthView /> : <UnauthView />}
         {/* <Router>
           <Routes>
             <Route path={"/"} element={<Navigate to="/index" />} />

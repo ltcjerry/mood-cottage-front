@@ -20,12 +20,11 @@ export const Login = () => {
   const { login, register } = useAuth();
   // 登录与注册状态
   const [isLogin, setIsLogin] = useState(true);
-  const handleSubmit = (values: { userName: string; password: string }) => {
+  const handleSubmit = (values: { username: string; password: string }) => {
     if (isLogin) {
       login(values);
     } else {
       register(values).then((res) => {
-        console.log("test", res);
         setIsLogin(true);
       });
     }

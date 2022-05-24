@@ -1,5 +1,5 @@
 import qs from "qs";
-import * as auth from "context/auth-provider";
+import * as auth from "utils/auth";
 import { useAuth } from "context/auth-context";
 import { useCallback } from "react";
 
