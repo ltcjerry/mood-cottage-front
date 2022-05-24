@@ -38,7 +38,7 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "server": "json-server __json_server_mock__/db.json --watch --port 3002"
+    "server": "json-server mock_server/db.json --watch --port 3002"
   },
   "eslintConfig": {
     "extends": [

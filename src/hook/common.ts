@@ -1,7 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const useArray = <T>(initArr: T[]) => {
-  const [value, setValue] = useState(initArr);
+export const useMount = (callback: () => void) => {
+  useEffect(() => {
+    callback();
+  }, []);
+};
+
+export const useDebounce = <T>(value: T, delay?: number) => {
+  const [tempValue, setTempValue] = useState(value);
+  useEffect(() => {
+    const timer = setTimeout(() => setTempValue(value), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+  return tempValue;
+};
+
+export const useArray = <T>(data: T[]) => {
+  const [value, setValue] = useState(data);
   return {
     value,
     setValue,

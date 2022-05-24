@@ -4,14 +4,14 @@ import "./index.css";
 import "antd/dist/antd.less";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AppProviders } from "context";
+// import { AppProviders } from "context";
 
 ReactDOM.render(
   <React.StrictMode>
     {/* context组件 */}
-    <AppProviders>
-      <App />
-    </AppProviders>
+    {/* <AppProviders> */}
+    <App />
+    {/* </AppProviders> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
