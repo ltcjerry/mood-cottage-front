@@ -5,7 +5,7 @@
 
 import { Fragment } from "react";
 import styled from "@emotion/styled";
-import { CommonHeader } from "component/common-header";
+import { CommonHeader } from "component/business/common-header";
 import { ArticleList } from "./component/article-list";
 import { RecommendList } from "./component/recommend-list";
 import "markdown-navbar/dist/navbar.css";

@@ -5,13 +5,13 @@ import * as auth from "utils/auth";
 const apiUrl = process?.env?.REACT_APP_API_URL || "localhost";
 
 interface Config extends RequestInit {
-  data?: object;
+  data?: { [key in string]: unknown };
   token?: string;
 }
 // 封装fetch接口请求
 export const request = async (
   endpoint: string,
-  { data, token, headers, ...custom }: Config = {}
+  { data = {}, token, headers, ...custom }: Config = {}
 ) => {
   const config = {
     method: "GET",
@@ -22,6 +22,9 @@ export const request = async (
     ...custom,
   };
   if (config.method.toUpperCase() === "GET") {
+    if (endpoint === "member") {
+      data.token = token;
+    }
     endpoint += `?${qs.stringify(data)}`;
   } else {
     config.body = JSON.stringify(data || {});

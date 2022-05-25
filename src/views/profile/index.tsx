@@ -7,7 +7,7 @@ import { Menu } from "antd";
 import { Fragment } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { CommonHeader } from "component/common-header";
+import { CommonHeader } from "component/business/common-header";
 import {
   LeftOutlined,
   StopOutlined,

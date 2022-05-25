@@ -5,7 +5,7 @@
 
 import { Fragment } from "react";
 import styled from "@emotion/styled";
-import { CommonHeader } from "component/common-header";
+import { CommonHeader } from "component/business/common-header";
 import { BasicInfo } from "./component/basic-info";
 import { AllRecord } from "./component/all-record";
 

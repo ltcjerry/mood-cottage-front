@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 
 import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Input, Menu, Space } from "antd";
-import { AvatarTool } from "component/avatar-tool";
+import { AvatarTool } from "component/business/avatar-tool";
 
 export const EditHeader = () => {
   return (

@@ -18,7 +18,7 @@ export const MyLogin = () => {
         name={"password"}
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <input type="password" id={"password"} placeholder={"密码"} />
+        <Input type="password" id={"password"} placeholder={"密码"} />
       </Form.Item>
       <Form.Item>
         <Button type={"primary"} htmlType={"submit"}>

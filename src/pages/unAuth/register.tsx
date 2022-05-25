@@ -18,11 +18,11 @@ export const MyRegister = () => {
         name={"password"}
         rules={[{ required: true, message: "请输入密码" }]}
       >
-        <input type="password" id={"password"} placeholder={"密码"} />
+        <Input type="password" id={"password"} placeholder={"密码"} />
       </Form.Item>
       <Form.Item>
         <Button type={"primary"} htmlType={"submit"}>
-          登录
+          注册
         </Button>
       </Form.Item>
     </Form>

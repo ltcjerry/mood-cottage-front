@@ -6,7 +6,7 @@
 import styled from "@emotion/styled";
 import { Button, Space } from "antd";
 import { BellOutlined } from "@ant-design/icons";
-import { AvatarTool } from "component/avatar-tool";
+import { AvatarTool } from "component/business/avatar-tool";
 import { ReactComponent as Logo } from "../../../assets/svg/logo_index.svg";
 
 export const TopHeader = () => {

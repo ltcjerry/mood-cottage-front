@@ -1,5 +1,5 @@
-import { ErrorBoundary } from "component/error-boundary";
-import { GlobalErrorFallback } from "component/style-component";
+import { ErrorBoundary } from "component/common/error-boundary";
+import { GlobalErrorFallback } from "component/loading/style-component";
 import { useAuth } from "context/auth-context";
 import { AuthView } from "pages/auth";
 import { UnauthView } from "pages/unAuth";

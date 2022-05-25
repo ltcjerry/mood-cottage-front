@@ -13,7 +13,6 @@ const apiUrl = process.env.REACT_APP_API_URL;
 export const getToken = () => window.localStorage.getItem(tokenKey);
 // 处理用户登录注册返回信息
 export const handleUserRes = ({ user }: { user: User }) => {
-  console.log("test", user);
   window.localStorage.setItem(tokenKey, user.token || "");
   return user;
 };
