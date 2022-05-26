@@ -10,6 +10,7 @@ function App() {
     <ErrorBoundary fallbackRender={GlobalErrorFallback}>
       <main className="App">
         {user ? <AuthView /> : <UnauthView />}
+
         {/* <Router>
           <Routes>
             <Route path={"/"} element={<Navigate to="/index" />} />
@@ -19,9 +20,7 @@ function App() {
             <Route path={"/editArticle"} element={<EditArticle />} />
             <Route path={"/createCenter"} element={<CreateCenter />} />
             <Route path={"/settingInfo"} element={<SettingInfo />} />
-            <Route
-              path={"/articleDetail/:articleId"}
-              element={<ArticleView />}
+            <Route path={"/articleDetail/:articleId"} element={<ArticleView />}
             />
           </Routes>
         </Router> */}

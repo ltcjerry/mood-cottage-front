@@ -2,18 +2,29 @@ import styled from "@emotion/styled";
 import { Button, Dropdown, Menu } from "antd";
 import { Row } from "component/style";
 import { useAuth } from "context/auth-context";
-import { MyArticle } from "pages/my-article";
+import { NovalView } from "pages/noval";
 import { ReactComponent as Logo } from "assets/svg/logo_index.svg";
+import {
+  Route,
+  Routes,
+  Navigate,
+  BrowserRouter as Router,
+} from "react-router-dom";
+import { SingleNoval } from "pages/detail";
+import { CreateArticle } from "pages/noval/create";
+import { useState } from "react";
+import { CollectArticle } from "component/business/collect-article";
 
 export const AuthView = () => {
   const { user, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Container>
       <Header between={true}>
         <LeftWrap gap={2}>
           <Logo width={"10rem"} />
-          <h2>项目</h2>
-          <h2>用户</h2>
+          <CollectArticle />
+          <span>用户</span>
         </LeftWrap>
         <RightWrap>
           <Dropdown
@@ -30,8 +41,16 @@ export const AuthView = () => {
         </RightWrap>
       </Header>
       <Main>
-        <MyArticle />
+        <Router>
+          <Routes>
+            <Route path={"/"} element={<Navigate replace to="/article" />} />
+            <Route path={"/article"} element={<NovalView />} />
+            <Route path={"/article/:articleId/*"} element={<SingleNoval />} />
+          </Routes>
+        </Router>
       </Main>
+      <Button onClick={() => setIsOpen(true)}>打开</Button>
+      <CreateArticle openState={isOpen} onClose={() => setIsOpen(false)} />
     </Container>
   );
 };
@@ -44,6 +63,7 @@ const Container = styled.div`
 
 const Header = styled(Row)`
   padding: 3.2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 const LeftWrap = styled(Row)``;

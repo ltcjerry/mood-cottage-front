@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { Button, Dropdown, Input, Menu, Space, Tabs } from "antd";
-import { ReactComponent as Logo } from "../assets/svg/logo_index.svg";
+import { ReactComponent as Logo } from "assets/svg/logo_index.svg";
 import {
   SearchOutlined,
   FormOutlined,

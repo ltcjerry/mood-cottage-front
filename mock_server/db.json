@@ -39,6 +39,7 @@
     {
       "id": 1,
       "name": "夜的命名术",
+      "pin": true,
       "personId": 1,
       "category": "玄幻",
       "created": 1704989757139
@@ -46,6 +47,7 @@
     {
       "id": 2,
       "name": "将军好凶猛",
+      "pin": true,
       "personId": 2,
       "category": "军事",
       "created": 1704989757139
@@ -53,6 +55,7 @@
     {
       "id": 3,
       "name": "盖世",
+      "pin": true,
       "personId": 3,
       "category": "玄幻",
       "created": 1704989757139
@@ -60,6 +63,7 @@
     {
       "id": 4,
       "name": "深空彼岸",
+      "pin": true,
       "personId": 4,
       "category": "都市",
       "created": 1704989757139

@@ -22,8 +22,8 @@ export const CommonSelect = (props: SelectProps) => {
   const { value, defaultOptionName, options, onChange, ...restProps } = props;
   return (
     <Select
-      value={toNumber(value)}
-      onChange={(vlaue) => onChange(toNumber(value) || undefined)}
+      value={options?.length ? toNumber(value) : 0}
+      onChange={(value) => onChange(toNumber(value) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (

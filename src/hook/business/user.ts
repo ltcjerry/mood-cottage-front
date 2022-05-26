@@ -4,7 +4,7 @@ import { cleanObject } from "utils/common";
 import { useRequst } from "utils/request";
 
 interface User {
-  id: string;
+  id: number;
   name: string;
 }
 export const useUser = (param?: Partial<User>) => {

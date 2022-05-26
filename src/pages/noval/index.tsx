@@ -1,19 +1,21 @@
-import { useState } from "react";
 import { SearchPanel } from "./search";
 import { ShowList } from "./list";
 import { useDebounce } from "hook/common";
 import styled from "@emotion/styled";
 import { useArtcle } from "hook/business/article";
 import { useUser } from "hook/business/user";
-export const MyArticle = () => {
-  const [param, setParam] = useState({ name: "", personId: "" });
+import { useUrlQueryParam } from "hook/common/url-query";
+export const NovalView = () => {
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
   const debounceParam = useDebounce(param, 3000);
-  const { isLoading, data: list } = useArtcle(debounceParam);
+  const { isLoading, refresh, data: list } = useArtcle(debounceParam);
   const { data: users } = useUser();
   return (
     <Container>
+      <h1>小说列表</h1>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       <ShowList
+        refresh={refresh}
         loading={isLoading}
         users={users || []}
         dataSource={list || []}

@@ -1,5 +1,6 @@
 import { useAuth } from "context/auth-context";
 import qs from "qs";
+import { useCallback } from "react";
 import * as auth from "utils/auth";
 
 const apiUrl = process?.env?.REACT_APP_API_URL || "localhost";
@@ -42,6 +43,9 @@ export const request = async (
 // 使用request方法并携带token
 export const useRequst = () => {
   const { user } = useAuth();
-  return (...[endpoint, config]: Parameters<typeof request>) =>
-    request(endpoint, { ...config, token: user?.token });
+  return useCallback(
+    (...[endpoint, config]: Parameters<typeof request>) =>
+      request(endpoint, { ...config, token: user?.token }),
+    [user?.token]
+  );
 };
