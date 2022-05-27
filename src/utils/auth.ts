@@ -8,7 +8,7 @@ export interface User {
 // 自定义token字段
 const tokenKey = "secret_token";
 // 请求url地址
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = "http://localhost:3002";
 // 获取存储的token值
 export const getToken = () => window.localStorage.getItem(tokenKey);
 // 处理用户登录注册返回信息

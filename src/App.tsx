@@ -1,5 +1,3 @@
-import { ErrorBoundary } from "component/common/error-boundary";
-import { GlobalErrorFallback } from "component/loading/style-component";
 import { useAuth } from "context/auth-context";
 import { AuthView } from "pages/auth";
 import { UnauthView } from "pages/unAuth";
@@ -7,11 +5,10 @@ import { UnauthView } from "pages/unAuth";
 function App() {
   const { user } = useAuth();
   return (
-    <ErrorBoundary fallbackRender={GlobalErrorFallback}>
-      <main className="App">
-        {user ? <AuthView /> : <UnauthView />}
+    <main className="App">
+      {user ? <AuthView /> : <UnauthView />}
 
-        {/* <Router>
+      {/* <Router>
           <Routes>
             <Route path={"/"} element={<Navigate to="/index" />} />
             <Route path={"/index"} element={<Home />} />
@@ -24,8 +21,7 @@ function App() {
             />
           </Routes>
         </Router> */}
-      </main>
-    </ErrorBoundary>
+    </main>
   );
 }
 

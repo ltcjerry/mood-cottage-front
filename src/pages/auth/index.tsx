@@ -50,7 +50,7 @@ export const AuthView = () => {
         </Router>
       </Main>
       <Button onClick={() => setIsOpen(true)}>打开</Button>
-      <CreateArticle openState={isOpen} onClose={() => setIsOpen(false)} />
+      <CreateArticle openState={isOpen} />
     </Container>
   );
 };

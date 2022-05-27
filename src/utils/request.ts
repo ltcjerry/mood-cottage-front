@@ -3,7 +3,7 @@ import qs from "qs";
 import { useCallback } from "react";
 import * as auth from "utils/auth";
 
-const apiUrl = process?.env?.REACT_APP_API_URL || "localhost";
+const apiUrl = "http://localhost:3002";
 
 interface Config extends RequestInit {
   data?: { [key in string]: unknown };
