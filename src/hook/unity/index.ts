@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import { useMountRef } from "./mount-state";
 
 interface Unity<T> {
@@ -16,24 +16,38 @@ const defalutState: Unity<null> = {
 const defaultConfig = {
   throwOnError: false,
 };
+
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const mountedState = useMountRef();
+  return useCallback(
+    (...args: T[]) => (mountedState.current ? dispatch(...args) : void 0),
+    [dispatch, mountedState]
+  );
+};
+
 // 统一管理请求状态
 export const useUnity = <T>(
   initState?: Unity<T>,
   initConfig?: typeof defaultConfig
 ) => {
-  const mountedState = useMountRef();
-  const [refresh, setRefresh] = useState(() => () => {});
-  const [unity, setUnity] = useState({ ...defalutState, ...initState });
   const config = { ...defaultConfig, ...initConfig };
+  // 使用useState惰性初始化存储请求函数
+  const [refresh, setRefresh] = useState(() => () => {});
+  // 使用useReducer处理相互关联的状态数据
+  const [unity, dispatch] = useReducer(
+    (state: Unity<T>, action: Partial<Unity<T>>) => ({ ...state, ...action }),
+    { ...defalutState, ...initState }
+  );
+  const safeDispatch = useSafeDispatch(dispatch);
   // 请求成功改变状态方法
   const onSucess = useCallback(
-    (data: T) => setUnity({ data, state: "success", error: null }),
-    []
+    (data: T) => safeDispatch({ data, state: "success", error: null }),
+    [safeDispatch]
   );
   // 请求失败改变状态方法
   const onFailure = useCallback(
-    (error: Error) => setUnity({ data: null, state: "error", error }),
-    []
+    (error: Error) => safeDispatch({ data: null, state: "error", error }),
+    [safeDispatch]
   );
   // 用来触发异步请求
   const execute = useCallback(
@@ -48,13 +62,10 @@ export const useUnity = <T>(
         }
       });
       // 初始请求状态
-      setUnity((prevState) => ({ ...prevState, state: "loading" }));
+      safeDispatch({ state: "loading" });
       return promise
         .then((data) => {
-          // 组件未卸载时执行更新
-          if (mountedState.current) {
-            onSucess(data);
-          }
+          onSucess(data);
           return data;
         })
         .catch((error) => {
@@ -63,7 +74,7 @@ export const useUnity = <T>(
           return config.throwOnError ? Promise.reject(error) : error;
         });
     },
-    [config.throwOnError, mountedState, onSucess, onFailure]
+    [config.throwOnError, safeDispatch, onSucess, onFailure]
   );
   return {
     isIdle: unity.state === "idle",
