@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 import { Button, Divider, List, Popover, Typography } from "antd";
 import { useArtcle } from "hook/business/article";
+import { useArticleModal } from "hook/business/modal";
 
 export const CollectArticle = () => {
+  const { onOpen } = useArticleModal();
   const { data: articles } = useArtcle();
   const collectList = articles?.filter((item) => item.pin);
   const Content = (
@@ -16,7 +18,7 @@ export const CollectArticle = () => {
         ))}
       </List>
       <Divider />
-      <Button type={"link"} style={{ padding: 0 }}>
+      <Button type={"link"} style={{ padding: 0 }} onClick={onOpen}>
         创建小说
       </Button>
     </ContentBox>

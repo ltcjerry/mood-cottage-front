@@ -8,23 +8,7 @@ function App() {
   const { user } = useAuth();
   return (
     <ErrorBoundary fallbackRender={GlobalErrorFallback}>
-      <main className="App">
-        {user ? <AuthView /> : <UnauthView />}
-
-        {/* <Router>
-          <Routes>
-            <Route path={"/"} element={<Navigate to="/index" />} />
-            <Route path={"/index"} element={<Home />} />
-            <Route path={"/login"} element={<Login />} />
-            <Route path={"/myHome"} element={<MyHome />} />
-            <Route path={"/editArticle"} element={<EditArticle />} />
-            <Route path={"/createCenter"} element={<CreateCenter />} />
-            <Route path={"/settingInfo"} element={<SettingInfo />} />
-            <Route path={"/articleDetail/:articleId"} element={<ArticleView />}
-            />
-          </Routes>
-        </Router> */}
-      </main>
+      <main className="App">{user ? <AuthView /> : <UnauthView />}</main>
     </ErrorBoundary>
   );
 }

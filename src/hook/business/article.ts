@@ -1,52 +1,96 @@
-import { useUnity } from "hook/unity";
 import { Article } from "pages/noval/list";
-import { useCallback, useEffect } from "react";
 import { cleanObject } from "utils/common";
 import { useRequst } from "utils/request";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
+// export const useArtcle = (param?: Partial<Article>) => {
+//   const request = useRequst();
+//   const { execute, ...remain } = useUnity<Article[]>();
+//   const fetchArticle = useCallback(
+//     () => request("article", { data: cleanObject(param || {}) }),
+//     [param, request]
+//   );
+//   useEffect(() => {
+//     execute(fetchArticle(), { refresh: fetchArticle });
+//   }, [param, execute, fetchArticle]);
+//   return remain;
+// };
+// export const useEditArticle = () => {
+//   const request = useRequst();
+//   const { execute, ...remain } = useUnity();
+//   const doAction = (params: Partial<Article>) => {
+//     return execute(
+//       request("article", {
+//         data: params,
+//         method: "PATCH",
+//       })
+//     );
+//   };
+//   return {
+//     doAction,
+//     ...remain,
+//   };
+// };
+// export const useAddArticle = () => {
+//   const request = useRequst();
+//   const { execute, ...remain } = useUnity();
+//   const doAction = (params: Partial<Article>) => {
+//     return execute(
+//       request("article", {
+//         data: params,
+//         method: "POST",
+//       })
+//     );
+//   };
+//   return {
+//     doAction,
+//     ...remain,
+//   };
+// };
+
+// 使用react-query重写
 export const useArtcle = (param?: Partial<Article>) => {
   const request = useRequst();
-  const { execute, ...remain } = useUnity<Article[]>();
-  const fetchArticle = useCallback(
-    () => request("article", { data: cleanObject(param || {}) }),
-    [param, request]
+  return useQuery<Article[]>(["article", param], () =>
+    request("article", { data: cleanObject(param || {}) })
   );
-  useEffect(() => {
-    execute(fetchArticle(), { refresh: fetchArticle });
-  }, [param, execute, fetchArticle]);
-  return remain;
 };
 
 export const useEditArticle = () => {
-  const { execute, ...remain } = useUnity();
   const request = useRequst();
-  const doAction = (params: Partial<Article>) => {
-    return execute(
-      request("article", {
-        data: params,
+  const quertClient = useQueryClient();
+  return useMutation(
+    (params: Partial<Article>) =>
+      request(`article/${params.id}`, {
         method: "PATCH",
-      })
-    );
-  };
-  return {
-    doAction,
-    ...remain,
-  };
+        data: params,
+      }),
+    {
+      onSuccess: () => quertClient.invalidateQueries("article"),
+    }
+  );
 };
 
 export const useAddArticle = () => {
-  const { execute, ...remain } = useUnity();
   const request = useRequst();
-  const doAction = (params: Partial<Article>) => {
-    return execute(
+  const quertClient = useQueryClient();
+  return useMutation(
+    (params: Partial<Article>) =>
       request("article", {
-        data: params,
         method: "POST",
-      })
-    );
-  };
-  return {
-    doAction,
-    ...remain,
-  };
+        data: params,
+      }),
+    {
+      onSuccess: () => quertClient.invalidateQueries("article"),
+    }
+  );
+};
+
+export const useArticleInfo = (id?: number) => {
+  const request = useRequst();
+  return useQuery<Article>(
+    ["article", { id }],
+    () => request("article", { data: { id } }),
+    { enabled: !!id }
+  );
 };

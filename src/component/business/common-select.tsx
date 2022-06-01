@@ -5,8 +5,8 @@ type ComponentProps = React.ComponentProps<typeof Select>;
 
 interface SelectProps
   extends Omit<ComponentProps, "value" | "onChange" | "options"> {
-  value: number | string | null | undefined;
-  onChange: (value?: number) => void;
+  value?: number | string | null | undefined;
+  onChange?: (value?: number) => void;
   defaultOptionName?: string;
   options?: { name: string; id: number }[];
 }
@@ -23,7 +23,7 @@ export const CommonSelect = (props: SelectProps) => {
   return (
     <Select
       value={options?.length ? toNumber(value) : 0}
-      onChange={(value) => onChange(toNumber(value) || undefined)}
+      onChange={(value) => onChange?.(toNumber(value) || undefined)}
       {...restProps}
     >
       {defaultOptionName ? (

@@ -36,8 +36,16 @@ export const request = async (
       window.location.reload();
       return Promise.reject({ message: "请重新登录" });
     }
-    const data = await res.json();
-    return res.ok ? data : Promise.reject(data);
+    let result = await res.json();
+    // 查询信息可能只有一个shi
+    if (
+      config.method.toUpperCase() === "GET" &&
+      data.id &&
+      result.length === 1
+    ) {
+      result = result[0];
+    }
+    return res.ok ? result : Promise.reject(result);
   });
 };
 // 使用request方法并携带token

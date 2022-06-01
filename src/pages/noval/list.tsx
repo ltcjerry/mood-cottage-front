@@ -1,7 +1,8 @@
-import { Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, Table, TableProps } from "antd";
 import { CommonRate } from "component/business/common-rate";
 import dayjs from "dayjs";
 import { useEditArticle } from "hook/business/article";
+import { useArticleModal } from "hook/business/modal";
 export interface Article {
   id: string;
   name: string;
@@ -16,9 +17,11 @@ interface ListProps extends TableProps<Article> {
 }
 
 export const ShowList = ({ users, ...props }: ListProps) => {
-  const { doAction } = useEditArticle();
+  const { onEdit } = useArticleModal();
+  const { mutate } = useEditArticle();
   const exeAction = (id: number) => (pin: boolean) =>
-    doAction({ id: String(id), pin }).then(props.refresh);
+    mutate({ id: String(id), pin });
+  const editArtcle = (id: number) => () => onEdit(id);
   return (
     <Table
       rowKey={"id"}
@@ -36,7 +39,7 @@ export const ShowList = ({ users, ...props }: ListProps) => {
           },
         },
         { title: "名称", dataIndex: "name" },
-        { title: "部门", dataIndex: "category" },
+        { title: "分类", dataIndex: "category" },
         {
           title: "作者",
           render(value, article) {
@@ -57,6 +60,28 @@ export const ShowList = ({ users, ...props }: ListProps) => {
                   ? dayjs(article.created).format("YYYY-MM-DD")
                   : "/"}
               </span>
+            );
+          },
+        },
+        {
+          title: "操作",
+          render(value, article) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item
+                      key={"edit"}
+                      onClick={editArtcle(Number(article.id))}
+                    >
+                      编辑
+                    </Menu.Item>
+                    <Menu.Item key={"delete"}>删除</Menu.Item>
+                  </Menu>
+                }
+              >
+                <Button type={"link"}>...</Button>
+              </Dropdown>
             );
           },
         },

@@ -1,6 +1,6 @@
 import React from "react";
 
-type FallbackRender = (props: { error: Error | null }) => React.ReactElement;
+type FallbackRender = (props: { error: Error | null }) => any;
 // 错误边界组件即某个组件的崩溃不会导致整个APP的崩溃
 export class ErrorBoundary extends React.Component<
   React.PropsWithChildren<{ fallbackRender: FallbackRender }>,
