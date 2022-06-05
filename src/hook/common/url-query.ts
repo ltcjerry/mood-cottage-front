@@ -4,7 +4,8 @@ import { cleanObject } from "utils/common";
 // 获取url参数
 export const useUrlQueryParam = <T extends string>(keys: T[]) => {
   const [stateKeys] = useState(keys);
-  const [searchParam, setSearchParam] = useSearchParams();
+  const [searchParam] = useSearchParams();
+  const setUrlSearchParam = useSetUrlSearchParam();
   return [
     useMemo(() => {
       return stateKeys.reduce((prev, key) => {
@@ -12,11 +13,18 @@ export const useUrlQueryParam = <T extends string>(keys: T[]) => {
       }, {} as { [key in T]: string });
     }, [searchParam, stateKeys]),
     (params: Partial<{ [key in string]: unknown }>) => {
-      const temp = cleanObject({
-        ...Object.fromEntries(searchParam),
-        ...params,
-      }) as URLSearchParamsInit;
-      setSearchParam(temp);
+      setUrlSearchParam(params);
     },
   ] as const;
+};
+
+export const useSetUrlSearchParam = () => {
+  const [searchParam, setSearchParam] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const temp = cleanObject({
+      ...Object.fromEntries(searchParam),
+      ...params,
+    }) as URLSearchParamsInit;
+    setSearchParam(temp);
+  };
 };

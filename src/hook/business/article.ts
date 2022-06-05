@@ -67,6 +67,7 @@ export const useEditArticle = () => {
       }),
     {
       onSuccess: () => quertClient.invalidateQueries("article"),
+      async onMutate(target) {},
     }
   );
 };
@@ -79,6 +80,20 @@ export const useAddArticle = () => {
       request("article", {
         method: "POST",
         data: params,
+      }),
+    {
+      onSuccess: () => quertClient.invalidateQueries("article"),
+    }
+  );
+};
+
+export const useDeleteArticle = () => {
+  const request = useRequst();
+  const quertClient = useQueryClient();
+  return useMutation(
+    (id: number) =>
+      request(`article/${id}`, {
+        method: "DELETE",
       }),
     {
       onSuccess: () => quertClient.invalidateQueries("article"),

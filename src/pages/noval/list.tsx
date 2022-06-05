@@ -1,7 +1,7 @@
-import { Button, Dropdown, Menu, Table, TableProps } from "antd";
+import { Button, Dropdown, Menu, Modal, Table, TableProps } from "antd";
 import { CommonRate } from "component/business/common-rate";
 import dayjs from "dayjs";
-import { useEditArticle } from "hook/business/article";
+import { useEditArticle, useDeleteArticle } from "hook/business/article";
 import { useArticleModal } from "hook/business/modal";
 export interface Article {
   id: string;
@@ -19,9 +19,21 @@ interface ListProps extends TableProps<Article> {
 export const ShowList = ({ users, ...props }: ListProps) => {
   const { onEdit } = useArticleModal();
   const { mutate } = useEditArticle();
+  const { mutate: deleteArticle } = useDeleteArticle();
   const exeAction = (id: number) => (pin: boolean) =>
     mutate({ id: String(id), pin });
   const editArtcle = (id: number) => () => onEdit(id);
+  const confirmDelete = (id: number) => {
+    Modal.confirm({
+      title: "确定删除吗？",
+      content: "点击确定删除",
+      okText: "确定",
+      cancelText: "取消",
+      onOk() {
+        deleteArticle(id);
+      },
+    });
+  };
   return (
     <Table
       rowKey={"id"}
@@ -70,13 +82,15 @@ export const ShowList = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item
-                      key={"edit"}
-                      onClick={editArtcle(Number(article.id))}
-                    >
+                    <Menu.Item key={"edit"} onClick={editArtcle(+article.id)}>
                       编辑
                     </Menu.Item>
-                    <Menu.Item key={"delete"}>删除</Menu.Item>
+                    <Menu.Item
+                      key={"delete"}
+                      onClick={() => confirmDelete(+article.id)}
+                    >
+                      删除
+                    </Menu.Item>
                   </Menu>
                 }
               >
